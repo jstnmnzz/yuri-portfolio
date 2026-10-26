@@ -1,0 +1,986 @@
+:root {
+    --background: #d9ff45;
+    --background-2: #b9df31;
+    --text: #10110d;
+    --window: #f5f5ed;
+    --window-header: #171812;
+    --window-text: #141510;
+    --border: #171812;
+    --muted: #68695f;
+    --accent: #d9ff45;
+    --taskbar: rgba(15, 16, 12, 0.92);
+}
+
+body.dark {
+    --background: #171914;
+    --background-2: #20231c;
+    --text: #f3f5e9;
+    --window: #23251f;
+    --window-header: #d9ff45;
+    --window-text: #f5f5ec;
+    --border: #d9ff45;
+    --muted: #a9ab9f;
+    --accent: #d9ff45;
+    --taskbar: rgba(5, 5, 4, 0.94);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    font-family: "Inter", sans-serif;
+    background: var(--background);
+    color: var(--text);
+    overflow: hidden;
+}
+
+
+/* =========================================
+   BOOT SCREEN
+========================================= */
+
+.boot-screen {
+    position: fixed;
+    inset: 0;
+    background: #10110d;
+    color: #d9ff45;
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition:
+        opacity 0.5s ease,
+        visibility 0.5s ease;
+}
+
+.boot-screen.hide {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.boot-logo {
+    width: 84px;
+    height: 84px;
+    border: 2px solid #d9ff45;
+    display: grid;
+    place-items: center;
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 25px;
+}
+
+.boot-screen h1 {
+    font-family: "Space Mono", monospace;
+    font-size: 1.6rem;
+    letter-spacing: 0.15em;
+}
+
+.boot-screen p {
+    margin-top: 10px;
+    font-family: "Space Mono", monospace;
+    font-size: 0.7rem;
+    opacity: 0.65;
+}
+
+.boot-loader {
+    width: 180px;
+    height: 3px;
+    background: #2e3127;
+    margin-top: 30px;
+    overflow: hidden;
+}
+
+.boot-loader span {
+    height: 100%;
+    width: 45%;
+    display: block;
+    background: #d9ff45;
+    animation: loading 1s infinite ease-in-out;
+}
+
+@keyframes loading {
+
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(330%);
+    }
+
+}
+
+
+/* =========================================
+   DESKTOP
+========================================= */
+
+.desktop {
+    min-height: 100vh;
+    width: 100%;
+    background:
+        linear-gradient(
+            135deg,
+            var(--background),
+            var(--background-2)
+        );
+    position: relative;
+    overflow: hidden;
+    transition: 0.3s;
+}
+
+.desktop::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    opacity: 0.17;
+    pointer-events: none;
+
+    background-image:
+        linear-gradient(
+            rgba(0,0,0,0.25) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(0,0,0,0.25) 1px,
+            transparent 1px
+        );
+
+    background-size: 40px 40px;
+}
+
+
+/* =========================================
+   STATUS BAR
+========================================= */
+
+.status-bar {
+    height: 52px;
+    padding: 0 25px;
+    background: var(--window-header);
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    z-index: 100;
+}
+
+body.dark .status-bar {
+    color: #10110d;
+}
+
+.status-left,
+.status-right {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.system-logo {
+    width: 28px;
+    height: 28px;
+    display: grid;
+    place-items: center;
+    border: 1px solid currentColor;
+    font-weight: 800;
+}
+
+.status-left strong {
+    font-family: "Space Mono", monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+}
+
+.system-version,
+.status-right {
+    font-family: "Space Mono", monospace;
+    font-size: 0.65rem;
+}
+
+.system-version {
+    opacity: 0.55;
+}
+
+.status-button {
+    color: inherit;
+    border: 0;
+    background: transparent;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+
+/* =========================================
+   INTRO
+========================================= */
+
+.desktop-intro {
+    position: absolute;
+    top: 95px;
+    right: 5vw;
+    text-align: right;
+    z-index: 2;
+}
+
+.intro-small {
+    font-family: "Space Mono", monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.14em;
+    margin-bottom: 12px;
+}
+
+.desktop-intro h1 {
+    font-size: clamp(4.5rem, 10vw, 10rem);
+    line-height: 0.76;
+    letter-spacing: -0.08em;
+}
+
+.desktop-intro h1 span {
+    display: block;
+    font-weight: 400;
+}
+
+.desktop-intro p {
+    margin-top: 30px;
+    line-height: 1.6;
+    font-family: "Space Mono", monospace;
+    font-size: 0.7rem;
+}
+
+
+/* =========================================
+   ICONS
+========================================= */
+
+.desktop-icons {
+    position: absolute;
+    top: 95px;
+    left: 35px;
+    display: grid;
+    grid-template-columns: repeat(2, 100px);
+    gap: 25px 15px;
+    z-index: 5;
+}
+
+.desktop-icon {
+    border: 0;
+    background: transparent;
+    color: var(--text);
+    cursor: pointer;
+    text-align: center;
+}
+
+.icon-box {
+    width: 68px;
+    height: 68px;
+    margin: 0 auto 8px;
+    display: grid;
+    place-items: center;
+    background: var(--window);
+    color: var(--window-text);
+    border: 2px solid var(--border);
+    box-shadow: 5px 5px 0 var(--border);
+    font-family: "Space Mono", monospace;
+    font-size: 0.9rem;
+    font-weight: 700;
+    transition: 0.18s;
+}
+
+.desktop-icon:hover .icon-box {
+    transform: translate(3px, 3px);
+    box-shadow: 2px 2px 0 var(--border);
+}
+
+.desktop-icon > span {
+    display: inline-block;
+    padding: 4px 7px;
+    font-family: "Space Mono", monospace;
+    font-size: 0.65rem;
+    font-weight: 700;
+}
+
+
+/* =========================================
+   WINDOWS
+========================================= */
+
+.app-window {
+    width: min(760px, calc(100vw - 80px));
+    max-height: calc(100vh - 150px);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 200;
+    background: var(--window);
+    color: var(--window-text);
+    border: 2px solid var(--border);
+    box-shadow: 12px 12px 0 rgba(0,0,0,0.85);
+    transform:
+        translate(-50%, -45%)
+        scale(0.94);
+    opacity: 0;
+    visibility: hidden;
+    transition:
+        opacity 0.2s ease,
+        transform 0.2s ease;
+    overflow: hidden;
+}
+
+.app-window.active {
+    opacity: 1;
+    visibility: visible;
+    transform:
+        translate(-50%, -50%)
+        scale(1);
+}
+
+.window-header {
+    height: 44px;
+    background: var(--window-header);
+    color: var(--accent);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 15px;
+    border-bottom: 2px solid var(--border);
+}
+
+body.dark .window-header {
+    color: #10110d;
+}
+
+.window-title {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-family: "Space Mono", monospace;
+    font-size: 0.68rem;
+}
+
+.window-dot {
+    width: 9px;
+    height: 9px;
+    background: currentColor;
+    border-radius: 50%;
+}
+
+.window-close {
+    width: 48px;
+    height: 100%;
+    background: transparent;
+    color: inherit;
+    border: 0;
+    border-left: 1px solid currentColor;
+    font-size: 1.4rem;
+    cursor: pointer;
+}
+
+.window-close:hover {
+    background: #e54b36;
+    color: white;
+}
+
+.window-content {
+    padding: 45px;
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+}
+
+.mini-label {
+    display: block;
+    margin-bottom: 15px;
+    font-family: "Space Mono", monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+}
+
+.window-big-title {
+    font-size: clamp(2.4rem, 5vw, 4.5rem);
+    letter-spacing: -0.06em;
+    margin-bottom: 40px;
+}
+
+
+/* =========================================
+   PROFILE
+========================================= */
+
+.profile-content {
+    display: grid;
+    grid-template-columns: 0.85fr 1fr;
+    gap: 45px;
+    align-items: center;
+}
+
+.profile-photo {
+    aspect-ratio: 4 / 5;
+    position: relative;
+    overflow: hidden;
+    background: #10110d;
+    border: 2px solid var(--border);
+}
+
+.profile-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.profile-fallback {
+    position: absolute;
+    inset: 0;
+    display: none;
+    place-items: center;
+    background: #10110d;
+    color: #d9ff45;
+    font-size: 5rem;
+    font-weight: 800;
+}
+
+.profile-information h2 {
+    font-size: clamp(3rem, 6vw, 5rem);
+    line-height: 0.9;
+    letter-spacing: -0.07em;
+}
+
+.profile-information p {
+    line-height: 1.8;
+    color: var(--muted);
+}
+
+.profile-line {
+    width: 100%;
+    height: 2px;
+    background: var(--border);
+    margin: 30px 0;
+}
+
+.profile-status {
+    margin-top: 30px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    font-family: "Space Mono", monospace;
+    font-size: 0.63rem;
+}
+
+.profile-status span {
+    width: 9px;
+    height: 9px;
+    background: #63d54a;
+    border-radius: 50%;
+}
+
+
+/* =========================================
+   ABOUT TERMINAL
+========================================= */
+
+.terminal-text {
+    background: #11120e;
+    color: #e7eadc;
+    padding: 30px;
+    font-family: "Space Mono", monospace;
+    font-size: 0.75rem;
+    line-height: 1.8;
+}
+
+.terminal-text span {
+    color: #d9ff45;
+}
+
+.terminal-text p {
+    margin: 5px 0 22px;
+    color: #c4c7bc;
+}
+
+
+/* =========================================
+   SKILLS
+========================================= */
+
+.skills-list {
+    border-top: 2px solid var(--border);
+}
+
+.skill-item {
+    display: grid;
+    grid-template-columns: 60px 1fr auto;
+    gap: 20px;
+    align-items: center;
+    padding: 25px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.skill-number {
+    font-family: "Space Mono", monospace;
+    font-size: 0.65rem;
+}
+
+.skill-item h3 {
+    font-size: 1.3rem;
+    margin-bottom: 5px;
+}
+
+.skill-item p {
+    font-size: 0.8rem;
+    color: var(--muted);
+}
+
+.skill-item > span {
+    font-family: "Space Mono", monospace;
+    font-size: 0.6rem;
+    border: 1px solid var(--border);
+    padding: 6px 9px;
+}
+
+
+/* =========================================
+   HOBBIES
+========================================= */
+
+.hobby-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.hobby-card {
+    min-height: 280px;
+    padding: 22px;
+    border: 2px solid var(--border);
+    display: flex;
+    flex-direction: column;
+}
+
+.hobby-symbol {
+    font-size: 3.2rem;
+    margin-bottom: auto;
+}
+
+.hobby-card > span {
+    font-family: "Space Mono", monospace;
+    font-size: 0.6rem;
+    color: var(--muted);
+}
+
+.hobby-card h3 {
+    font-size: 1.4rem;
+    margin: 8px 0;
+}
+
+.hobby-card p {
+    font-size: 0.78rem;
+    line-height: 1.65;
+    color: var(--muted);
+}
+
+
+/* =========================================
+   EDUCATION
+========================================= */
+
+.education-panel {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 30px;
+    background: var(--window-header);
+    color: var(--accent);
+    padding: 35px;
+}
+
+body.dark .education-panel {
+    color: #10110d;
+}
+
+.education-year {
+    font-size: 4rem;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.education-panel span {
+    font-family: "Space Mono", monospace;
+    font-size: 0.6rem;
+}
+
+.education-panel h3 {
+    margin: 10px 0;
+    font-size: 1.6rem;
+    line-height: 1.25;
+}
+
+.education-panel p {
+    font-size: 0.85rem;
+}
+
+.education-info {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border: 2px solid var(--border);
+    border-top: 0;
+}
+
+.education-info div {
+    padding: 20px;
+    border-right: 1px solid var(--border);
+}
+
+.education-info div:last-child {
+    border-right: 0;
+}
+
+.education-info span {
+    display: block;
+    font-family: "Space Mono", monospace;
+    font-size: 0.55rem;
+    margin-bottom: 8px;
+    color: var(--muted);
+}
+
+.education-info strong {
+    font-size: 0.8rem;
+}
+
+
+/* =========================================
+   CONTACT
+========================================= */
+
+.contact-list {
+    border-top: 2px solid var(--border);
+}
+
+.contact-item {
+    display: grid;
+    grid-template-columns: 100px 1fr auto;
+    gap: 20px;
+    align-items: center;
+    padding: 25px 0;
+    border-bottom: 1px solid var(--border);
+    color: inherit;
+    text-decoration: none;
+}
+
+.contact-item span {
+    font-family: "Space Mono", monospace;
+    font-size: 0.6rem;
+    color: var(--muted);
+}
+
+.contact-item strong {
+    font-size: 1rem;
+    word-break: break-word;
+}
+
+.contact-item b {
+    font-size: 1.5rem;
+    transition: 0.2s;
+}
+
+.contact-item:hover b {
+    transform: translate(4px, -4px);
+}
+
+
+/* =========================================
+   TASKBAR
+========================================= */
+
+.taskbar {
+    height: 58px;
+    position: fixed;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--taskbar);
+    border: 1px solid rgba(255,255,255,0.2);
+    backdrop-filter: blur(15px);
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px;
+    z-index: 500;
+    color: white;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+}
+
+.start-button {
+    width: 42px;
+    height: 42px;
+    border: 0;
+    background: #d9ff45;
+    color: #10110d;
+    font-weight: 900;
+    cursor: pointer;
+}
+
+.taskbar-divider {
+    width: 1px;
+    height: 28px;
+    background: rgba(255,255,255,0.2);
+}
+
+.task-app {
+    height: 42px;
+    padding: 0 14px;
+    border: 0;
+    background: transparent;
+    color: white;
+    font-family: "Space Mono", monospace;
+    font-size: 0.6rem;
+    cursor: pointer;
+}
+
+.task-app:hover {
+    background: rgba(255,255,255,0.12);
+}
+
+.taskbar-time {
+    min-width: 70px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    font-family: "Space Mono", monospace;
+    font-size: 0.62rem;
+}
+
+
+/* =========================================
+   START MENU
+========================================= */
+
+.start-menu {
+    width: 260px;
+    position: fixed;
+    bottom: 84px;
+    left: 50%;
+    transform: translateX(-265px);
+    background: #11120e;
+    color: #f5f5ed;
+    border: 1px solid #4b4c46;
+    padding: 12px;
+    z-index: 490;
+    display: none;
+    box-shadow: 10px 10px 0 rgba(0,0,0,0.4);
+}
+
+.start-menu.active {
+    display: block;
+}
+
+.start-profile {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding-bottom: 15px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid #393a34;
+}
+
+.start-profile > div {
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    background: #d9ff45;
+    color: #10110d;
+    font-weight: 800;
+}
+
+.start-profile span {
+    font-size: 0.65rem;
+    line-height: 1.5;
+    color: #a5a69f;
+}
+
+.start-profile strong {
+    display: block;
+    color: white;
+}
+
+.start-menu button {
+    width: 100%;
+    border: 0;
+    background: transparent;
+    color: white;
+    text-align: left;
+    padding: 12px;
+    font-family: "Space Mono", monospace;
+    font-size: 0.65rem;
+    cursor: pointer;
+}
+
+.start-menu button:hover {
+    background: #d9ff45;
+    color: #10110d;
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 850px) {
+
+    .desktop-intro {
+        right: 30px;
+    }
+
+    .desktop-intro h1 {
+        font-size: 6rem;
+    }
+
+    .desktop-icons {
+        grid-template-columns: 90px;
+    }
+
+    .profile-content {
+        grid-template-columns: 1fr 1fr;
+    }
+
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 650px) {
+
+    body {
+        overflow: auto;
+    }
+
+    .desktop {
+        min-height: 100vh;
+        padding-bottom: 100px;
+        overflow-y: auto;
+    }
+
+    .system-version,
+    #statusDate {
+        display: none;
+    }
+
+    .status-bar {
+        padding: 0 15px;
+    }
+
+    .desktop-intro {
+        position: relative;
+        top: auto;
+        right: auto;
+        text-align: left;
+        padding: 45px 22px 20px;
+    }
+
+    .desktop-intro h1 {
+        font-size: 22vw;
+    }
+
+    .desktop-icons {
+        position: relative;
+        top: auto;
+        left: auto;
+        padding: 30px 22px 130px;
+        grid-template-columns:
+            repeat(3, 1fr);
+        gap: 28px 10px;
+    }
+
+    .app-window {
+        width: calc(100vw - 24px);
+        max-height: calc(100vh - 100px);
+        box-shadow: 6px 6px 0 rgba(0,0,0,0.8);
+    }
+
+    .window-content {
+        padding: 28px 22px;
+        max-height: calc(100vh - 160px);
+    }
+
+    .profile-content {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-photo {
+        max-height: 360px;
+    }
+
+    .hobby-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hobby-card {
+        min-height: 220px;
+    }
+
+    .education-panel {
+        grid-template-columns: 1fr;
+    }
+
+    .education-info {
+        grid-template-columns: 1fr;
+    }
+
+    .education-info div {
+        border-right: 0;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .education-info div:last-child {
+        border-bottom: 0;
+    }
+
+    .skill-item {
+        grid-template-columns: 40px 1fr;
+    }
+
+    .skill-item > span {
+        grid-column: 2;
+        width: fit-content;
+    }
+
+    .contact-item {
+        grid-template-columns: 1fr auto;
+    }
+
+    .contact-item span {
+        grid-column: 1 / -1;
+    }
+
+    .task-app {
+        display: none;
+    }
+
+    .taskbar {
+        width: auto;
+    }
+
+    .taskbar-divider {
+        display: none;
+    }
+
+    .start-menu {
+        left: 12px;
+        right: 12px;
+        width: auto;
+        transform: none;
+    }
+
+}
